@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS card_payment;
+DROP TABLE IF EXISTS account_payment;
+DROP TABLE IF EXISTS delivery;
+DROP TABLE IF EXISTS current_delivery;
+DROP TABLE IF EXISTS shipment;
+DROP TABLE IF EXISTS timeline;
+DROP TABLE IF EXISTS payment;
+DROP TABLE IF EXISTS service;
+DROP TABLE IF EXISTS package;
+DROP TABLE IF EXISTS location;
+DROP TABLE IF EXISTS customer;
+DROP TABLE IF EXISTS delivery_method;

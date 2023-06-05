@@ -8,10 +8,13 @@
 #ifndef Header_h
 #define Header_h
 
-#include <ncurses.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "mysql.h"
+#include <iostream>
+//#include <stdio.h>
+#include <cstdlib>
+//#include <string.h>
+#include <string>
+
 
 #define MENU_TYPE1 '1'
 #define MENU_TYPE2 '2'
@@ -20,7 +23,19 @@
 #define MENU_TYPE5 '5'
 #define MENU_TYPE0 '0'
 
-#define VEHICLE_NUM_LEN 100
+#define VEHICLE_NUM_LEN 20
+
+int state = 0;
+
+const char* query_TYPE1_1 = "";
+const char* query_TYPE1_2 = "";
+const char* query_TYPE1_3 = "";
+const char* query_TYPE2 = "";
+const char* query_TYPE3 = "";
+const char* query_TYPE4 = "";
+const char* query_TYPE5 = "";
+const char* query_TYPE6 = "";
+
 
 void TYPE_ONE(void);
 void TYPE_ONE_ONE(void);
