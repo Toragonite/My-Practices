@@ -1,6 +1,6 @@
 #include "Header.h"
 
-#pragma comment(lib, "libmysql.lib")
+//#pragma comment(lib, "libmysql.lib")
 
 using namespace std;
 
@@ -10,11 +10,6 @@ const char* pw = "!Ehfk171818";
 const char* db = "PJ2";
 
 int main(void) {
-
-	MYSQL* connection = NULL;
-	MYSQL conn;
-	MYSQL_RES* sql_result;
-	MYSQL_ROW sql_row;
 
 	if (mysql_init(&conn) == NULL)
 		//printf("mysql_init() error!");
@@ -38,6 +33,34 @@ int main(void) {
 		}
 
         int exit = 0;
+        
+        
+        std::filesystem::path currentPath = std::filesystem::current_path();
+        ifstream sql_file;
+        string line;
+        const char* sql_line;
+
+        filesystem::path filePath = currentPath / filename_1;
+        sql_file.open(filePath);
+
+        if(sql_file.is_open()){
+            while(getline(sql_file, line)){
+                sql_line = line.c_str();
+                int state = mysql_query(connection, sql_line);
+            }
+        }
+        sql_file.close();
+
+        filesystem::path filePath = currentPath / filename_2;
+        sql_file.open(filePath);
+
+        if(sql_file.is_open()){
+            while(getline(sql_file, line)){
+                sql_line = line.c_str();
+                int state = mysql_query(connection, sql_line);
+            }
+        }
+        sql_file.close();
 
         while(!exit){
             switch(menu()){
@@ -66,6 +89,16 @@ int main(void) {
 		}
         
         */
+       filesystem::path filePath = currentPath / filename_3;
+        sql_file.open(filePath);
+
+        if(sql_file.is_open()){
+            while(getline(sql_file, line)){
+                sql_line = line.c_str();
+                int state = mysql_query(connection, sql_line);
+            }
+        }
+        sql_file.close();
 
        mysql_close(connection);
     }
@@ -133,9 +166,28 @@ void TYPE_ONE_ONE(void){
         
         cin >> TruckNumber;
 
-        TruckNum = atoi(TruckNumber);
-
         if(TruckNum == 0) return;
+
+        string _query = query_TYPE1_1;
+        string TruckNumPH = "TruckNumber";
+        size_t pos = _query.find(TruckNumPH);
+        if(pos != string::npos){
+            _query.replace(pos, TruckNumPH.length(), TruckNumber);
+        }
+
+        const char* iquery = _query.c_str();
+
+        state = mysql_query(connection,iquery);
+		if (state == 0)
+		{
+			sql_result = mysql_store_result(connection);
+			while ((sql_row = mysql_fetch_row(sql_result)) != NULL)
+			{
+				cout << setw(11) << setfill(' ') << sql_row[0] << "|" 
+                << setw(21) << setfill(' ') << sql_row[1] << endl;
+			}
+			mysql_free_result(sql_result);
+		}
         
         cout << "Truck Number is "<< TruckNum << endl;
 
@@ -158,6 +210,19 @@ void TYPE_ONE_TWO(void){
         cin >> TruckNumber;
         TruckNum = atoi(TruckNumber);
         if(TruckNum == 0) return;
+
+        state = mysql_query(connection, query_TYPE1_2);
+		if (state == 0)
+		{
+			sql_result = mysql_store_result(connection);
+			while ((sql_row = mysql_fetch_row(sql_result)) != NULL)
+			{
+				printf("%s %s %s %s\n", sql_row[0], sql_row[1], sql_row[2], sql_row[3]);
+			}
+			mysql_free_result(sql_result);
+		}
+
+        
         
         cout << "Truck Number is" << TruckNum << endl;
     }
@@ -180,6 +245,17 @@ void TYPE_ONE_THREE(void){
         cin >> TruckNumber;
         TruckNum = atoi(TruckNumber);
         if(TruckNum == 0) return;
+
+        state = mysql_query(connection, query_TYPE1_3);
+		if (state == 0)
+		{
+			sql_result = mysql_store_result(connection);
+			while ((sql_row = mysql_fetch_row(sql_result)) != NULL)
+			{
+				printf("%s %s %s %s\n", sql_row[0], sql_row[1], sql_row[2], sql_row[3]);
+			}
+			mysql_free_result(sql_result);
+		}
         
         cout << "Truck Number is" << TruckNum << endl;
     }
@@ -200,6 +276,17 @@ void TYPE_TWO(void){
         cin >> c_Year;
         i_Year = atoi(c_Year);
         if(i_Year == 0) return;
+
+        state = mysql_query(connection, query_TYPE2);
+		if (state == 0)
+		{
+			sql_result = mysql_store_result(connection);
+			while ((sql_row = mysql_fetch_row(sql_result)) != NULL)
+			{
+				printf("%s %s %s %s\n", sql_row[0], sql_row[1], sql_row[2], sql_row[3]);
+			}
+			mysql_free_result(sql_result);
+		}
         
         cout << "TYPE_TWO" << i_Year << endl;
     }
@@ -220,6 +307,17 @@ void TYPE_THREE(void){
         cin >> c_Year;
         i_Year = atoi(c_Year);
         if(i_Year == 0) return;
+
+        state = mysql_query(connection, query_TYPE3);
+		if (state == 0)
+		{
+			sql_result = mysql_store_result(connection);
+			while ((sql_row = mysql_fetch_row(sql_result)) != NULL)
+			{
+				printf("%s %s %s %s\n", sql_row[0], sql_row[1], sql_row[2], sql_row[3]);
+			}
+			mysql_free_result(sql_result);
+		}
         
         cout << "TYPE_THREE " << i_Year << endl;
         system("clear");
@@ -234,6 +332,17 @@ void TYPE_FOUR(void){
     cout << "---- TYPE IV ----" << endl;
     cout << "**Find the packages that were not delivered within the promised time.**" << endl;
     
+    state = mysql_query(connection, query_TYPE4);
+	if (state == 0)
+	{
+		sql_result = mysql_store_result(connection);
+		while ((sql_row = mysql_fetch_row(sql_result)) != NULL)
+		{
+			printf("%s %s %s %s\n", sql_row[0], sql_row[1], sql_row[2], sql_row[3]);
+		}
+		mysql_free_result(sql_result);
+	}
+
     cout << "TYPE_FOUR" << endl;
     char q;
 
@@ -268,6 +377,17 @@ void TYPE_FIVE(void){
         i_Month = atoi(c_Month);
         
         if(i_Month == 0) return;
+
+        state = mysql_query(connection, query_TYPE5);
+		if (state == 0)
+		{
+			sql_result = mysql_store_result(connection);
+			while ((sql_row = mysql_fetch_row(sql_result)) != NULL)
+			{
+				printf("%s %s %s %s\n", sql_row[0], sql_row[1], sql_row[2], sql_row[3]);
+			}
+			mysql_free_result(sql_result);
+		}
         
         cout <<"TYPE_FIVE" << i_Year << i_Month << endl;
 

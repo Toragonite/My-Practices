@@ -9,8 +9,8 @@ CREATE TABLE customer (
 
 CREATE TABLE location (
     location_id INT NOT NULL,
-    pickup_location VARCHAR(20) NOT NULL,
-    delivery_location VARCHAR(20) NOT NULL,
+    pickup_location VARCHAR(40) NOT NULL,
+    delivery_location VARCHAR(40) NOT NULL,
     PRIMARY KEY (location_id)
 );
 
@@ -36,7 +36,7 @@ CREATE TABLE service (
 
 CREATE TABLE payment (
     payment_id INT NOT NULL,
-    customer_id INT NULL,
+    customer_id INT NOT NULL,
     payment_type VARCHAR(20) NOT NULL,
     PRIMARY KEY (payment_id),
     FOREIGN KEY (customer_id) REFERENCES customer (customer_id)
@@ -58,17 +58,17 @@ CREATE TABLE timeline (
     package_id INT NOT NULL,
     register_time DATETIME NOT NULL,
     departure_time DATETIME NOT NULL,
-    arrival_time DATETIME NOT NULL,
+    arrival_time DATETIME NULL,
     PRIMARY KEY (package_id),
     FOREIGN KEY (package_id) REFERENCES package (package_id)
 );
 
 CREATE TABLE current_delivery (
     current_delivery_id INT NOT NULL,
-    shipment_id INT NULL,
-    current_location VARCHAR(20) NOT NULL,
+    shipment_id INT NOT NULL,
+    current_location VARCHAR(40) NOT NULL,
     current_t DATETIME NOT NULL,
-    heading_location VARCHAR(20) NOT NULL,
+    heading_location VARCHAR(40) NULL,
     PRIMARY KEY (current_delivery_id),
     FOREIGN KEY (shipment_id) REFERENCES shipment (shipment_id)
 );
@@ -82,7 +82,7 @@ CREATE TABLE delivery_method (
 CREATE TABLE delivery (
     current_delivery_id INT NOT NULL,
     delivery_status VARCHAR(20) NOT NULL,
-    vehicle_id VARCHAR(20) NULL,
+    vehicle_id VARCHAR(20) NOT NULL,
     PRIMARY KEY (current_delivery_id),
     FOREIGN KEY (current_delivery_id) REFERENCES current_delivery (current_delivery_id),
     FOREIGN KEY (vehicle_id) REFERENCES delivery_method (vehicle_id)
